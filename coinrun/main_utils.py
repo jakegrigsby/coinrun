@@ -24,6 +24,11 @@ def make_general_env(num_env, seed=0, use_sub_proc=True):
     if epsilon > 0:
         env = wrappers.EpsilonGreedyWrapper(env, epsilon)
 
+    filter_ = Config.FILTER
+    
+     if filter_ != 0:
+         env = wrappers.VisualFeatureFilter(env, filter_, Config.R)
+
     return env
 
 def file_to_path(filename):
