@@ -99,7 +99,8 @@ class ConfigSingle(object):
         # The number of evaluation environments to use
         type_keys.append(('num-eval', 'num_eval', int, 20, True))
 
-        type_keys.append(('f', 'filter', int, 0))
+        type_keys.append(('train-s', 'train_spectrum', int, 0))
+        type_keys.append(('test-s', 'test_spectrum', int, 0))
         type_keys.append(('r', 'radius', float, 4.))
 
         # The number of episodes to evaluate with each evaluation environment

@@ -20,26 +20,6 @@ class EpsilonGreedyWrapper(gym.Wrapper):
         
         return self.env.step(action)
 
-class VisualFeatureFilter(gym.Wrapper):
-    def __init__(self, env, feature, r=4.):
-        gymWrapper.__init__(self, env)
-        self.feature = feature
-        self.r = r
-
-    def reset(self):
-        self.env.reset()
-
-    def step(self, action):
-        obs, rew, done, info = self.env.step(action)
-        self.transform(obs)
-
-    def transform(self, img):
-        f = np.fft.fftshift(
-                np.fft.fft2(img)
-                )
-        import pdb; pdb.set_trace()
-
-
 class EpisodeRewardWrapper(gym.Wrapper):
     def __init__(self, env):
         env.metadata = {'render.modes': []}

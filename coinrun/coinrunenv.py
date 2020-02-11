@@ -18,6 +18,7 @@ from baselines.common.vec_env import VecEnv
 from baselines import logger
 
 from coinrun.config import Config
+from coinrun import spectrum
 
 from mpi4py import MPI
 from baselines.common import mpi_util
@@ -209,6 +210,11 @@ class CoinRunVecEnv(VecEnv):
 
         if Config.USE_BLACK_WHITE:
             obs_frames = np.mean(obs_frames, axis=-1).astype(np.uint8)[...,None]
+
+        if Config.is_test_rank():
+            obs_frames = spectrum.slice_spectrum(obs_frames, Config.TEST_SPECTRUM, Config.R)
+        else:
+            obs_frames = spectrum.slice_spectrum(obs_frames, Config.TRAIN_SPECTRUM, Config.R)
 
         return obs_frames, self.buf_rew, self.buf_done, self.dummy_info
 
