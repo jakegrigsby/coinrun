@@ -206,10 +206,10 @@ class CoinRunVecEnv(VecEnv):
             self.buf_rew,
             self.buf_done)
 
-        obs_frames = self.buf_rgb
+        obs_frames = self.buf_rgb.astype(np.float32)
 
         if Config.USE_BLACK_WHITE:
-            obs_frames = np.mean(obs_frames, axis=-1).astype(np.uint8)[...,None]
+            obs_frames = np.mean(obs_frames.astype(np.float32), axis=-1).astype(np.float32)[...,None]
 
         if Config.is_test_rank():
             obs_frames = slice_spectrum(obs_frames, Config.TEST_SPECTRUM, Config.RADIUS)
