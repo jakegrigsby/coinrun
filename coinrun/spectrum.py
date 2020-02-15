@@ -29,12 +29,12 @@ def slice_spectrum(imgs, high_or_low, r):
         return imgs
     else:
         mask = create_circular_mask(imgs, r)
-        z = np.fft.fftshift(np.fft.fft2(imgs))
+        z = np.fft.fftshift(np.fft.fft2(imgs, axes=(-3, -2)), axes=(-3, -2))
         if high_or_low == -1:
             # keep low frequency features
             z *= mask
         else:
             # keep high frequency features
             z *= np.invert(mask)
-        imgs = np.fft.ifft2(np.fft.ifftshift(z)).astype(np.float32)
+        imgs = np.fft.ifft2(np.fft.ifftshift(z, axes=(-3, -2)), axes=(-3, -2)).astype(np.float32)
     return imgs
